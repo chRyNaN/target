@@ -1,0 +1,39 @@
+import com.chrynan.target.buildSrc.LibraryConstants
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+        maven {
+            url = "https://dl.bintray.com/chrynan/chrynan"
+        }
+    }
+    dependencies {
+        //classpath "com.chrynan.target:com.chrynan.target.plugin:${LibraryConstants.versionName}"
+    }
+}
+
+apply plugin: "kotlin-multiplatform"
+apply plugin: "kotlinx-serialization"
+
+group LibraryConstants.group
+version LibraryConstants.versionName
+
+kotlin {
+    targets {
+        jvm()
+        js()
+        ios()
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-common"
+            }
+        }
+    }
+}
+
+configurations {
+    compileClasspath
+}

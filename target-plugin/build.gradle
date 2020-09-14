@@ -1,0 +1,46 @@
+import com.chrynan.target.buildSrc.LibraryConstants
+
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "java-gradle-plugin"
+
+group LibraryConstants.group
+version LibraryConstants.versionName
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    compileOnly(gradleApi())
+
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
+
+    implementation project(":target-core")
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = LibraryConstants.group
+            artifactId = "target-plugin"
+            version = LibraryConstants.versionName
+
+            from components.java
+        }
+    }
+}
+
+gradlePlugin {
+    plugins {
+        jsonStringInputPlugin {
+            id = "com.chrynan.target.plugin"
+            implementationClass = "com.chrynan.target.plugin.TargetPlugin"
+        }
+    }
+}

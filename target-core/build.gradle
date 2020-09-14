@@ -1,0 +1,50 @@
+import com.chrynan.target.buildSrc.LibraryConstants
+
+apply plugin: "kotlin-multiplatform"
+apply plugin: "kotlinx-serialization"
+
+group LibraryConstants.group
+version LibraryConstants.versionName
+
+kotlin {
+    targets {
+        jvm()
+        js()
+        ios()
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-common"
+                api "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
+            }
+        }
+    }
+}
+
+configurations {
+    compileClasspath
+}
+
+publishing {
+    publications {
+        kotlinMultiplatform {
+            artifactId = "target-core"
+        }
+        jvm {
+            artifactId = "target-core-jvm"
+        }
+        js {
+            artifactId = "target-core-js"
+        }
+        iosArm64 {
+            artifactId = "target-core-ios-arm64"
+        }
+        iosX64 {
+            artifactId = "target-core-ios-x64"
+        }
+        metadata {
+            artifactId = "target-core-metadata"
+        }
+    }
+}
