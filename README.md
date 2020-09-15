@@ -23,6 +23,8 @@ kotlinTargetDataGenerator {
 * Run the Gradle Task
 `./gradlew generateKotlinTargetData`
 
+Refer to the `target-example` module for an example on how to use the library and for the generated output.
+
 ### Parsing the JSON Kotlin Targets
 
 * Add the `target-core` module as a dependency
@@ -33,6 +35,66 @@ implementation "com.chrynan.target:target-core:$VERSION"
 * Provide the JSON String to the `KotlinTargetContainer.fromJsonString()` function
 ```kotlin
 val container = KotlinTargetContainer.fromJsonString(jsonStringValue)
+```
+
+## Building the library
+
+The library is provided through [Bintray](https://bintray.com/chrynan/chrynan). Checkout the [releases page](https://github.com/chRyNaN/target/releases) to get the latest version.
+
+### Plugin
+
+```groovy
+buildscript {
+    repositories {
+        maven {
+            url = "https://dl.bintray.com/chrynan/chrynan"
+        }
+    }
+    dependencies {
+        classpath "com.chrynan.target:target-plugin:$VERSION"
+    }
+}
+
+apply plugin: "com.chrynan.target.plugin"
+```
+
+### Runtime
+
+#### Repository
+
+```groovy
+repositories {
+    maven {
+        url = uri("https://dl.bintray.com/chrynan/chrynan")
+    }
+}
+```
+
+#### Dependencies
+
+**Kotlin Common:**
+```groovy
+implementation "com.chrynan.colors:target-core:$VERSION"
+```
+
+**Kotlin JVM:**
+```groovy
+implementation "com.chrynan.colors:target-core-jvm:$VERSION"
+```
+
+**Kotlin JS:**
+```groovy
+implementation "com.chrynan.colors:target-core-js:$VERSION"
+```
+
+**Kotlin iOS ARM64:**
+```groovy
+implementation "com.chryan.colors:target-core-ios-arm64:$VERSION"
+```
+
+**Kotlin iOS x64:**
+```groovy
+implementation "com.chrynan.colors:target-core-ios-x64:$VERSION"
 ```
 
 ## License
