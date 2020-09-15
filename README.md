@@ -1,5 +1,6 @@
 # target
-Kotlin Multi-platform Target Image and JSON Generator Gradle Plugin.
+Kotlin Multi-platform Target Gradle Plugin. This Gradle Plugin generates a JSON file, and optional SVGs, for the available Kotlin Targets in a Kotlin Multi-platform Module.
+This allows easy access to which Kotlin Targets a module supports, for example in a README file.
 
 ## Using the library
 
