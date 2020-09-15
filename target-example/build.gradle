@@ -9,12 +9,13 @@ buildscript {
         }
     }
     dependencies {
-        //classpath "com.chrynan.target:com.chrynan.target.plugin:${LibraryConstants.versionName}"
+        classpath "com.chrynan.target:target-plugin:${LibraryConstants.versionName}"
     }
 }
 
 apply plugin: "kotlin-multiplatform"
 apply plugin: "kotlinx-serialization"
+apply plugin: "com.chrynan.target.plugin"
 
 group LibraryConstants.group
 version LibraryConstants.versionName
@@ -29,6 +30,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-common"
+
+                implementation "com.chrynan.target:target-core:${LibraryConstants.versionName}"
             }
         }
     }
@@ -36,4 +39,9 @@ kotlin {
 
 configurations {
     compileClasspath
+}
+
+kotlinTargetDataGenerator {
+    generateJson = true
+    generateSvg = true
 }

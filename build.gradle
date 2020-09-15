@@ -1,5 +1,4 @@
 import com.chrynan.target.buildSrc.LibraryConstants
-import org.gradle.api.publish.maven.internal.artifact.FileBasedMavenArtifact
 
 group LibraryConstants.group
 version LibraryConstants.versionName
@@ -28,48 +27,6 @@ allprojects {
             url = "https://dl.bintray.com/chrynan/chrynan"
         }
     }
-}
-
-subprojects {
-    apply plugin: "maven-publish"
-    apply plugin: "com.jfrog.bintray"
-
-    bintray {
-        user = project.findProperty("BINTRAY_USER") ?: System.getenv("BINTRAY_USER")
-        key = project.findProperty("BINTRAY_KEY") ?: System.getenv("BINTRAY_KEY")
-
-        pkg {
-            repo = LibraryConstants.bintrayRepo
-            name = LibraryConstants.repoName
-            licenses = [LibraryConstants.license]
-            vcsUrl = LibraryConstants.vcsUrl
-
-            version {
-                name = LibraryConstants.versionName
-                desc = LibraryConstants.versionDescription
-                released = new Date()
-                vcsTag = LibraryConstants.versionName
-            }
-        }
-    }
-
-    bintrayUpload.doFirst {
-        publications = publishing.publications.collect { publication ->
-            File moduleFile = new File(project.buildDir, "publications/${publication.name}/module.json")
-
-            if (moduleFile.exists()) {
-                publication.artifact(new FileBasedMavenArtifact(moduleFile) {
-                    protected String getDefaultExtension() {
-                        return "module"
-                    }
-                })
-            }
-
-            publication.name
-        }
-    }
-
-    bintrayUpload.dependsOn publishToMavenLocal
 }
 
 task clean(type: Delete) {

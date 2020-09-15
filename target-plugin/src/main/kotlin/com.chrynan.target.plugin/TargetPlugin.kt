@@ -1,4 +1,4 @@
-@file:Suppress("SameParameterValue")
+@file:Suppress("SameParameterValue", "unused")
 
 package com.chrynan.target.plugin
 
