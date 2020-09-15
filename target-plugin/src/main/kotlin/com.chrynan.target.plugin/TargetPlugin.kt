@@ -46,6 +46,7 @@ class TargetPlugin : Plugin<Project> {
     private fun generateJson(outputPath: String, kmpExtension: KotlinMultiplatformExtension) {
         val file = file(directoryPath = outputPath, fileName = DEFAULT_JSON_FILE_NAME)
 
+        file.parentFile.mkdirs()
         if (!file.exists()) file.createNewFile()
 
         val targets = kmpExtension.targets.map { mapper.map(it) }
@@ -71,6 +72,7 @@ class TargetPlugin : Plugin<Project> {
                 fileName = getSvgFileName(filePrefix = DEFAULT_SVG_FILE_NAME_PREFIX, targetName = it.name)
             )
 
+            file.parentFile.mkdirs()
             if (!file.exists()) file.createNewFile()
 
             val text = it.name
@@ -78,9 +80,11 @@ class TargetPlugin : Plugin<Project> {
             val textColor = colorHandler.getTextColor(text)
 
             val fileText = """
-                |<svg xmlns="https://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100">
-                |    <rect x="0" y="0" width="200" height="100" stroke="$backgroundColor" stroke-width="5px" fill="$backgroundColor"/>
-                |    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="$textColor">$text</text>
+                |<?xml version="1.0" encoding="utf-8"?>
+                |<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                |<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink" width="200" height="100" viewBox="0 0 200 100">
+                |    <rect x="0" y="0" width="200" height="100" fill="$backgroundColor" rx="50"/>
+                |    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="$textColor" font-size="1.5em">$text</text>
                 |</svg>
             """.trimMargin()
 

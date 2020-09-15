@@ -5,12 +5,14 @@ import kotlin.random.Random
 
 class ColorHandler(private val colors: List<KotlinTargetColor>) {
 
-    private val defaultColors = listOf(
+    private val defaultBackgroundColors = listOf(
         "#3AD4FF",
         "#6BAC25",
         "#FF9B00",
         "#4B4BFF"
     )
+
+    private val defaultTextColor = "#FFFFFF"
 
     private val backgroundColorMap = mutableMapOf<String, String>()
     private val textColorMap = mutableMapOf<String, String>()
@@ -28,7 +30,7 @@ class ColorHandler(private val colors: List<KotlinTargetColor>) {
     fun getTextColor(name: String): String {
         val kotlinTargetColor = colors.firstOrNull { it.name == name }
 
-        val color = kotlinTargetColor?.textColor ?: textColorMap[name] ?: getRandomColor()
+        val color = kotlinTargetColor?.textColor ?: textColorMap[name] ?: defaultTextColor
 
         textColorMap[name] = color
 
@@ -36,8 +38,8 @@ class ColorHandler(private val colors: List<KotlinTargetColor>) {
     }
 
     private fun getRandomColor(): String {
-        val index = Random.nextInt(defaultColors.size)
+        val index = Random.nextInt(defaultBackgroundColors.size)
 
-        return defaultColors[index]
+        return defaultBackgroundColors[index]
     }
 }
