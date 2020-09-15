@@ -22,6 +22,7 @@ class TargetPlugin : Plugin<Project> {
         private const val DEFAULT_JSON_FILE_NAME = "targets.json"
         private const val DEFAULT_SVG_FILE_NAME_PREFIX = "target_"
         private const val DEFAULT_SVG_SUB_DIRECTORY = "svg"
+        private const val DEFAULT_OUTPUT_SUB_DIRECTORY = "targets"
     }
 
     override fun apply(project: Project) {
@@ -33,7 +34,7 @@ class TargetPlugin : Plugin<Project> {
             val kmpExtension = project.extensions.getByName("kotlin") as KotlinMultiplatformExtension
 
             task.doFirst {
-                val outputPath = extension.outputPath ?: project.projectDir.path
+                val outputPath = extension.outputPath ?: "${project.projectDir.path}/$DEFAULT_OUTPUT_SUB_DIRECTORY"
 
                 if (extension.generateJson) generateJson(outputPath, kmpExtension)
 
